@@ -2,6 +2,13 @@
 
 A full-featured blog platform with post creation, drafts, image uploads, comments, likes, and admin moderation. Users can write and share content, while admins manage tags, categories, and moderate posts.
 
+![Home Page](Screenshots/Home.png)
+![Post](Screenshots/Post.png)
+![Comments](Screenshots/Comments.png)
+![New Post](Screenshots/NewPost.png)
+![Draft Posts](Screenshots/DraftPosts.png)
+![Categories](Screenshots/Categories.png)
+
 ## 🔑 Main Features
 
 - **Authentication**: User registration and login (JWT)  
