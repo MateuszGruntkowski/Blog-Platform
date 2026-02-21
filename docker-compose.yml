@@ -1,14 +1,49 @@
 services:
   db:
     image: postgres:latest
+    container_name: postgres_db
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: ${DB_NAME:-postgres}
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    build: .
+    container_name: blog-spring_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME:-postgres}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JWT_SECRET: ${JWT_SECRET:-myVerySecureSecretKey1234567890abcdefghijklmnopqrstuvwxyz}
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./frontend/blog
+      dockerfile: Dockerfile
+    container_name: blog-vite_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     restart: always
 
   adminer:
     image: adminer:latest
+    container_name: adminer_tool
     ports:
       - "8888:8080"
     restart: always
+
+volumes:
+  postgres_data:
