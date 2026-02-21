@@ -9,7 +9,7 @@ A full-featured blog platform with post creation, drafts, image uploads, comment
 ![Draft Posts](Screenshots/DraftPosts.png)
 ![Categories](Screenshots/Categories.png)
 
-## 🔑 Main Features
+## Main Features
 
 - **Authentication**: User registration and login (JWT)  
 - **Posts**: CRUD operations, drafts, likes, image uploads  
@@ -17,7 +17,7 @@ A full-featured blog platform with post creation, drafts, image uploads, comment
 - **Categories**: Category management (ADMIN only)  
 - **Tags**: Tag management (ADMIN only)  
 
-## 🚀 Technologies
+## Technologies
 
 - Spring Boot 3.x  
 - Spring Security + JWT  
@@ -26,7 +26,7 @@ A full-featured blog platform with post creation, drafts, image uploads, comment
 - React 19
 - OpenAPI/Swagger  
 
-## 📚 API Documentation
+## API Documentation
 
 Full API documentation is available in Swagger UI once the application is running:
 
@@ -45,5 +45,45 @@ For endpoints requiring authorization:
 2. Copy the returned token  
 3. Click the **"Authorize"** button in Swagger UI  
 4. Paste the token (without the `Bearer` prefix)  
-5. Click **"Authorize"**  
+5. Click **"Authorize"** 
+
+## Quick Start (Running the project)
+
+You can run the entire stack (Frontend, Backend, Database) with a single command thanks to Docker.
+
+### Prerequisites
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+* (Optional) [Git](https://git-scm.com/) to clone the repository.
+
+### Installation & Launch
+
+1. **Clone the repository:**
+```bash
+   git clone https://github.com/MateuszGruntkowski/Blog-Platform.git
+   cd <project-folder-name>
+```
+
+2. **Prepare environment variables:**
+   The project uses default values for development, but you can customize them by creating a `.env` file based on the example:
+```bash
+   cp .env.example .env
+```
+
+3. **Run the application:**
+```bash
+   docker-compose up --build
+```
+
+4. **Access the application:**
+    - **Frontend:** http://localhost:3000
+    - **Swagger UI (API Docs):** http://localhost:8080/swagger-ui/index.html
+    - **Adminer (DB Management):** http://localhost:8888
+
+## Default Credentials
+- **Admin User:** `user@test.com` / `password`
+- **Database:**
+  - Database name: `postgres`
+  - Database user: `postgres`
+  - Database password: `password`
+
 
