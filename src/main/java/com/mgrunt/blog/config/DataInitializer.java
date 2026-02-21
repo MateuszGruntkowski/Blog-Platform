@@ -68,9 +68,13 @@ public class DataInitializer implements CommandLineRunner {
         // 4. Stwórz Posta
         Post post = Post.builder()
                 .title("Welcome to Blog Platform!")
-                .content("This is an automatically generated sample post. " +
-                        "This prevents the app from being empty when first launched in Docker. " +
-                        "You can test commenting, editing, and deleting this post.")
+                .content("This is a sample post generated automatically to showcase the application's capabilities.\n\n" +
+                        "Feel free to explore the core features implemented in this project:\n" +
+                        "- Creating new Categories and Tags\n" +
+                        "- Publishing Posts and managing them as an Admin (including Deleting)\n" +
+                        "- Creating and editing Drafts\n" +
+                        "- Interaction: Adding and Deleting comments (Admin has full moderation rights)\n" +
+                        "This data was seeded automatically on the first Docker launch to provide a complete demo experience.")
                 .status(PostStatus.PUBLISHED)
                 .readingTime(5)
                 .author(author)
