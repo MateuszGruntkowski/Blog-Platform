@@ -1,0 +1,87 @@
+package com.mgrunt.blog.config;
+
+import com.mgrunt.blog.domain.PostStatus;
+import com.mgrunt.blog.domain.entities.Category;
+import com.mgrunt.blog.domain.entities.Post;
+import com.mgrunt.blog.domain.entities.Tag;
+import com.mgrunt.blog.domain.entities.User;
+import com.mgrunt.blog.repositories.CategoryRepository;
+import com.mgrunt.blog.repositories.PostRepository;
+import com.mgrunt.blog.repositories.TagRepository;
+import com.mgrunt.blog.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+@Component
+@RequiredArgsConstructor
+public class DataInitializer implements CommandLineRunner {
+
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final TagRepository tagRepository;
+
+    @Override
+    public void run(String... args) throws Exception {
+        if (postRepository.count() == 0) {
+            initializeData();
+        }
+    }
+
+    private void initializeData() {
+        System.out.println("Inicjalizacja danych startowych...");
+
+        String email = "user@test.com";
+        User author = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Nie znaleziono użytkownika startowego! Sprawdź SecurityConfig."));
+
+        Category category = categoryRepository.findByName("Technologia")
+                .orElseGet(() -> categoryRepository.save(
+                        Category.builder()
+                                .name("Technologia")
+                                .build()
+                ));
+
+        Tag tagJava = tagRepository.findByName("Java")
+                .orElseGet(() -> tagRepository.save(
+                        Tag.builder()
+                                .name("Java")
+                                .build()
+                ));
+
+        Tag tagSpring = tagRepository.findByName("Spring Boot")
+                .orElseGet(() -> tagRepository.save(
+                        Tag.builder()
+                                .name("Spring Boot")
+                                .build()
+                ));
+
+        Set<Tag> tags = new HashSet<>();
+        tags.add(tagJava);
+        tags.add(tagSpring);
+
+        // 4. Stwórz Posta
+        Post post = Post.builder()
+                .title("Witaj w moim Portfolio!")
+                .content("This is an automatically generated sample post. " +
+                        "This prevents the app from being empty when first launched in Docker. " +
+                        "You can test commenting, editing, and deleting this post.")
+                .status(PostStatus.PUBLISHED)
+                .readingTime(5)
+                .author(author)
+                .category(category)
+                .tags(tags)
+                .comments(Collections.emptyList())
+                .likes(new HashSet<>())
+                .build();
+
+        postRepository.save(post);
+
+        System.out.println("Utworzono post startowy: " + post.getTitle());
+    }
+}
