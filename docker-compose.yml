@@ -24,6 +24,9 @@ services:
       SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+      # SECURITY NOTE: In a production environment, secrets should never have default fallbacks in version control.
+      # A default value is provided here STRICTLY for ease of local deployment and portfolio demonstration.
       JWT_SECRET: ${JWT_SECRET:-myVerySecureSecretKey1234567890abcdefghijklmnopqrstuvwxyz}
     restart: on-failure
 
