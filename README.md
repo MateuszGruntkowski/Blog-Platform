@@ -2,6 +2,11 @@
 
 A full-featured blog platform with post creation, drafts, image uploads, comments, likes, and admin moderation. Users can write and share content, while admins manage tags, categories, and moderate posts.
 
+## Demo (YT video)
+
+[![Watch the demo](https://img.shields.io/badge/▶_Watch_Demo-YouTube-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=X5pyNqrwhNY)
+
+## Screenshots
 ![Home Page](Screenshots/Home.png)
 ![Post](Screenshots/Post.png)
 ![Comments](Screenshots/Comments.png)
