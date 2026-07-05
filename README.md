@@ -1,6 +1,6 @@
-# Blog Platform
+# Social-Media Platform
 
-A full-featured blog platform with post creation, drafts, image uploads, comments, likes, and admin moderation. Users can write and share content, while admins manage tags, categories, and moderate posts.
+A full-featured social media platform with post creation, drafts, image uploads, comments, likes, and admin moderation. Users can write and share content, while admins manage tags, categories, and moderate posts.
 
 ## Demo (YT video)
 
