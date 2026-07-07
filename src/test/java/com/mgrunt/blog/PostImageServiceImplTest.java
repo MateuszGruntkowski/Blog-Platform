@@ -85,7 +85,7 @@ class PostImageServiceImplTest {
 
     @Test
     void createImage_shouldThrowException_whenFileIsTooLarge() {
-        // 5 MB = 5 * 1024 * 1024 = 5242880 bajtów. Tworzymy plik o 1 bajt większy.
+        // 5 MB = 5 * 1024 * 1024 = 5242880 bytes. We create a file 1 byte larger.
         byte[] largeContent = new byte[5 * 1024 * 1024 + 1];
         MockMultipartFile file = new MockMultipartFile(
                 "file", "large.jpg", "image/jpeg", largeContent
@@ -186,7 +186,6 @@ class PostImageServiceImplTest {
         PostImage newlyCreatedImage = new PostImage();
         newlyCreatedImage.setFileName("test.jpg");
 
-        // Spy lub mockowanie wewnętrznego wywołania repozytorium przez createImage()
         when(postImageRepository.save(any(PostImage.class))).thenReturn(newlyCreatedImage);
 
         PostImage result = postImageService.updateImageIfChanged(existingImage, file);
@@ -217,7 +216,6 @@ class PostImageServiceImplTest {
         when(file.getOriginalFilename()).thenReturn("test.jpg");
         when(file.getContentType()).thenReturn("image/jpeg");
         when(file.getSize()).thenReturn(3L);
-        // Rzucamy wyjątek przy próbie pobrania bajtów do porównania Arrays.equals()
         when(file.getBytes()).thenThrow(new IOException("Read error"));
 
         assertThatThrownBy(() -> postImageService.updateImageIfChanged(existingImage, file))
