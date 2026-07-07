@@ -51,6 +51,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(UUID id) {
+        if (!commentRepository.existsById(id)) {
+            throw new EntityNotFoundException("Comment with id: " + id + " does not exist.");
+        }
         commentRepository.deleteById(id);
     }
 }
