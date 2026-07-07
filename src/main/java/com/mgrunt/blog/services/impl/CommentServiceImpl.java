@@ -5,7 +5,6 @@ import com.mgrunt.blog.domain.entities.Comment;
 import com.mgrunt.blog.domain.entities.Post;
 import com.mgrunt.blog.domain.entities.User;
 import com.mgrunt.blog.repositories.CommentRepository;
-import com.mgrunt.blog.repositories.PostRepository;
 import com.mgrunt.blog.services.CommentService;
 import com.mgrunt.blog.services.PostService;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,7 +19,6 @@ import java.util.UUID;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
     private final PostService postService;
 
     @Override
@@ -31,8 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment createComment(User loggedInUser, CreateCommentRequest createCommentRequest, UUID postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("Post with id: " + postId + " not found"));
+        Post post = postService.getPost(postId);
         Comment comment = Comment.builder()
                 .content(createCommentRequest.getContent())
                 .post(post)
@@ -51,6 +47,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(UUID id) {
+        if (!commentRepository.existsById(id)) {
+            throw new EntityNotFoundException("Comment with id: " + id + " does not exist.");
+        }
         commentRepository.deleteById(id);
     }
 }
